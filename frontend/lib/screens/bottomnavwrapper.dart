@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/home.dart';
+import 'package:frontend/screens/home/home.dart';
+import 'package:frontend/screens/pantry/pantry.dart';
+import 'package:frontend/screens/recipes/recipesearch.dart';
 import 'package:frontend/util/palette.dart';
 
 class BottomNavWrapper extends StatefulWidget {
@@ -25,6 +27,11 @@ class _BottomNavWrapperState extends State<BottomNavWrapper> {
       backgroundColor: Colors.red,
     ),
     BottomNavigationBarItem(
+      icon: Icon(Icons.other_houses),
+      label: 'Pantry',
+      backgroundColor: Colors.red,
+    ),
+    BottomNavigationBarItem(
       icon: Icon(Icons.handshake),
       label: 'Volunteering',
       backgroundColor: Colors.red,
@@ -39,11 +46,12 @@ class _BottomNavWrapperState extends State<BottomNavWrapper> {
   int _selectedIndex = 0;
 
   late Map<int, Widget> bodyContents = {
-    // 0: const Home(),
-    0: placeholder("Home"),
-    1: placeholder("Recipies"),
-    2: placeholder("Volunteering"),
-    3: placeholder("Map")
+    0: const Home(),
+    // 0: placeholder("Home"),
+    1: const RecipeGenerator(),
+    2: const Pantry(),
+    3: placeholder("Volunteering"),
+    4: placeholder("Map")
   };
 
   void _onItemTapped(int index) {
@@ -61,6 +69,7 @@ class _BottomNavWrapperState extends State<BottomNavWrapper> {
           currentIndex: _selectedIndex,
           showUnselectedLabels: true,
           type: BottomNavigationBarType.fixed,
+          fixedColor: Palette.primary,
           items: items,
           onTap: (index) => _onItemTapped(index),
         ));
