@@ -35,28 +35,43 @@ class _HomeState extends State<Home> {
             ],
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "Expiring soon!",
-              style: TextStyle(color: Palette.highEmphasis, fontSize: 18),
-            ),
+        Container(
+          padding: const EdgeInsets.all(12),
+          decoration: const BoxDecoration(color: Palette.primary),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Expiring soon!",
+                    style: TextStyle(
+                        color: Palette.background,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: List<Widget>.generate(
+                        PantryItem.placeholderList.length,
+                        (index) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ExpiringTile(
+                                  item: PantryItem.placeholderList
+                                      .elementAt((index))),
+                            ))),
+              )
+            ],
           ),
         ),
-        SingleChildScrollView(
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List<Widget>.generate(
-                  PantryItem.placeholderList.length,
-                  (index) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ExpiringTile(
-                            item:
-                                PantryItem.placeholderList.elementAt((index))),
-                      ))),
-        )
       ],
     );
   }

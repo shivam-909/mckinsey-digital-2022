@@ -15,32 +15,44 @@ class ExpiringTile extends StatefulWidget {
 class _ExpiringTileState extends State<ExpiringTile> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          widget.item.name,
-          style: const TextStyle(fontSize: 16, color: Palette.highEmphasis),
-        ),
-        Container(
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
-          child: SizedBox(
-            height: 100,
-            width: 100,
-            child: Image.network(
-              widget.item.imageUrl,
-              fit: BoxFit.cover,
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      color: Colors.grey[900],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              widget.item.name,
+              style: const TextStyle(
+                  fontSize: 16,
+                  color: Palette.background,
+                  fontWeight: FontWeight.w600),
             ),
-          ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: SizedBox(
+                height: 120,
+                width: 120,
+                child: Image.network(
+                  widget.item.imageUrl,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Text(
+              Utils.stringifyDate(widget.item.useBy),
+              style: TextStyle(color: Colors.red[400]),
+            ),
+          ],
         ),
-        const SizedBox(
-          height: 8,
-        ),
-        Text(
-          Utils.stringifyDate(widget.item.useBy),
-          style: const TextStyle(color: Palette.highlight),
-        ),
-      ],
+      ),
     );
   }
 }

@@ -26,10 +26,10 @@ class _RecipeGeneratorState extends State<RecipeGenerator> {
       appBar: AppBar(
         title: const Text(
           "Recipe Generator",
-          style: TextStyle(fontSize: 24, color: Palette.background),
+          style: TextStyle(fontSize: 24, color: Palette.highEmphasis),
         ),
         centerTitle: true,
-        backgroundColor: Palette.highEmphasis,
+        backgroundColor: Palette.background,
       ),
       body: Column(children: [
         Container(

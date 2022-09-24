@@ -15,35 +15,27 @@ class _BottomNavWrapperState extends State<BottomNavWrapper> {
   TextStyle optionStyle =
       const TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
-  List<BottomNavigationBarItem> items = const <BottomNavigationBarItem>[
-    BottomNavigationBarItem(
-      icon: Icon(Icons.home),
-      label: 'Home',
-      backgroundColor: Colors.red,
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.restaurant),
-      label: 'Recipes',
-      backgroundColor: Colors.red,
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.other_houses),
-      label: 'Pantry',
-      backgroundColor: Colors.red,
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.handshake),
-      label: 'Volunteering',
-      backgroundColor: Colors.red,
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.map),
-      label: 'Map',
-      backgroundColor: Colors.red,
-    ),
+  BottomNavigationBarItem bottomIcon(IconData icon, String label) =>
+      BottomNavigationBarItem(
+        icon: Icon(
+          icon,
+          size: 48,
+        ),
+        label: label,
+        backgroundColor: Colors.red,
+      );
+
+  late List<BottomNavigationBarItem> items = <BottomNavigationBarItem>[
+    bottomIcon(Icons.home, "Home"),
+    bottomIcon(Icons.restaurant, "Recipes"),
+    bottomIcon(Icons.other_houses, "Pantry"),
+    bottomIcon(Icons.handshake, "Help out"),
+    bottomIcon(Icons.map, "Map"),
   ];
 
-  int _selectedIndex = 0;
+  static setPage(int pageNum) {}
+
+  static int _selectedIndex = 0;
 
   late Map<int, Widget> bodyContents = {
     0: const Home(),
@@ -70,6 +62,8 @@ class _BottomNavWrapperState extends State<BottomNavWrapper> {
           showUnselectedLabels: true,
           type: BottomNavigationBarType.fixed,
           fixedColor: Palette.primary,
+          selectedFontSize: 16,
+          unselectedFontSize: 14,
           items: items,
           onTap: (index) => _onItemTapped(index),
         ));
