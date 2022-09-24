@@ -36,40 +36,40 @@ const (
 )
 
 type Household struct {
-	ID       uuid.UUID
-	Postcode string
+	ID       uuid.UUID `json:"id"`
+	Postcode string    `json:"postcode"`
 }
 
 type Inhabitant struct {
-	ID           uuid.UUID
-	Household    *Household
-	Weight       int32
-	Sex          Sex
-	AgeRange     AgeRange
-	PasscodeHash string
+	ID           uuid.UUID  `json:"id"`
+	Household    *Household `json:"household"`
+	Weight       int32      `json:"weight"`
+	Sex          Sex        `json:"sex"`
+	AgeRange     AgeRange   `json:"age_range"`
+	PasscodeHash string     `json:"passcode_hash"`
 }
 
 type FoodItem struct {
-	ID              uuid.UUID
-	Household       *Household
-	ShortName       string
-	FoodDescription string
-	BestBy          time.Time
+	ID              uuid.UUID  `json:"id"`
+	Household       *Household `json:"household"`
+	ShortName       string     `json:"short_name"`
+	FoodDescription string     `json:"food_description"`
+	BestBy          time.Time  `json:"best_by"`
 }
 
 type Appliance struct {
-	ID        uuid.UUID
-	Household *Household
+	ID        uuid.UUID  `json:"id"`
+	Household *Household `json:"household"`
 }
 
 type DietaryRequirement struct {
-	ID              uuid.UUID
-	Household       *Household
-	RequirementType DietaryRequirementType
+	ID              uuid.UUID              `json:"id"`
+	Household       *Household             `json:"household"`
+	RequirementType DietaryRequirementType `json:"requirement_type"`
 }
 
 type DonationCenter struct {
-	ID            uuid.UUID
-	TradeName     string
-	StreetAddress string
+	ID            uuid.UUID `json:"id"`
+	TradeName     string    `json:"trade_name"`
+	StreetAddress string    `json:"street_address"`
 }
