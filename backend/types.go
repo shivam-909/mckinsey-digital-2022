@@ -40,7 +40,7 @@ type Household struct {
 	Postcode string
 }
 
-type User struct {
+type Inhabitant struct {
 	ID           uuid.UUID
 	Household    *Household
 	Weight       int32
