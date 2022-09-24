@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS household;
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS food_item;
+DROP TABLE IF EXISTS appliance;
+DROP TABLE IF EXISTS dietary_requirement;
+DROP TABLE IF EXISTS donation_center;

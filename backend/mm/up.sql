@@ -3,9 +3,9 @@ CREATE TABLE household (
     postcode text
 );
 
-CREATE TABLE user (
+CREATE TABLE inhabitant (
     id UUID PRIMARY KEY,
-    household_id UUID PRIMARY KEY,
+    household_id UUID,
     weight_kg int,
     sex text,
     age_range text,
@@ -14,7 +14,7 @@ CREATE TABLE user (
 
 CREATE TABLE food_item (
     id UUID PRIMARY KEY,
-    household_id UUID PRIMARY KEY,
+    household_id UUID,
     short_name text,
     food_description text,
     best_by timestamp
@@ -22,13 +22,13 @@ CREATE TABLE food_item (
 
 CREATE TABLE appliance (
     id UUID PRIMARY KEY,
-    household_id UUID PRIMARY KEY,
-    appliance_type int,
+    household_id UUID,
+    appliance_type int
 );
 
 CREATE TABLE dietary_requirement (
     id UUID PRIMARY KEY,
-    household_id UUID PRIMARY KEY,
+    household_id UUID,
     requirement_type int
 );
 

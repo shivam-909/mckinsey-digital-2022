@@ -15,22 +15,25 @@ type DB struct {
 var (
 	db_connection_string = flag.String("db_string", "localhost:5432", "db string to connect to pg db")
 
-	db *DB
+	Datastore *DB
 )
 
 func Init(ctx context.Context) {
 	flag.Parse()
 
+	log.Println("parsing config...")
 	config, err := pgx.ParseConfig(*db_connection_string)
 	if err != nil {
-		log.Fatalf("failed to parse config string")
+		log.Fatalf("failed to parse config string: %v", err)
 	}
 
+	log.Println("connecting to db...")
 	conn, err := pgx.ConnectConfig(ctx, config)
 	if err != nil {
-		log.Fatalf("failed to connect to db")
+		log.Fatalf("failed to connect to db: %v", err)
 
 	}
 
-	db = &DB{conn: conn}
+	log.Println("db connection instantiated!")
+	Datastore = &DB{conn: conn}
 }
