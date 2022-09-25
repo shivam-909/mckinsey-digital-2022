@@ -20,6 +20,37 @@ class Client {
     return json.map((element) => Food.fromJson(jsonData: element)).toList();
   }
 
+  static Future<List<Food>> fetchPantry() async {
+    http.Response response = await http.get(
+        Uri.parse(
+          baseUrl + "pantry",
+        ),
+        headers: {"Content-Type": "application/json"});
+
+    print(response.statusCode);
+
+    List<dynamic> json = jsonDecode(response.body);
+
+    return json
+        .map((element) => Food.fromPantryJson(jsonData: element))
+        .toList();
+  }
+
+  static Future<List<String>> fetchPantryRecipes() async {
+    http.Response response = await http.get(
+        Uri.parse(
+          baseUrl + "pantryrecipes",
+        ),
+        headers: {"Content-Type": "application/json"});
+
+    print(response.statusCode);
+
+    List<dynamic> json = jsonDecode(response.body);
+
+    return json.map((element) => element["title"] as String).toList();
+    // .map((element) => Food.fromPantryJson(jsonData: element))
+  }
+
   static Future<String> fetchImageUrlForQuery(String query) async {
     http.Response response = await http.get(
         Uri.parse("https://api.pexels.com/v1/search?query=$query&per_page=1"),

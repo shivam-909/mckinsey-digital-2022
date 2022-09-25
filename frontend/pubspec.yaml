@@ -35,6 +35,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.5
   shimmer: ^2.0.0
+  dotted_border: ^2.0.0+2
+  cached_network_image: ^3.2.1
+  flutter_map: ^2.2.0
+  geolocator: ^9.0.2
 
 dev_dependencies:
   flutter_test:

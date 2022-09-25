@@ -39,4 +39,14 @@ class Food {
         nutrition: parsedDesc["details"],
         id: jsonData["food_id"]);
   }
+
+  factory Food.fromPantryJson({required Map<String, dynamic> jsonData}) => Food(
+      name: jsonData["short_name"],
+      type: "Pantry Food",
+      url: jsonData["image"],
+      servingSize: "",
+      // parsedDesc["servingSize"],
+      nutrition: {},
+      // parsedDesc["details"],
+      id: jsonData["id"]);
 }
