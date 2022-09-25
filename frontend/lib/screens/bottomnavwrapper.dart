@@ -28,7 +28,7 @@ class _BottomNavWrapperState extends State<BottomNavWrapper> {
   late List<BottomNavigationBarItem> items = <BottomNavigationBarItem>[
     bottomIcon(Icons.home, "Home"),
     bottomIcon(Icons.restaurant, "Recipes"),
-    bottomIcon(Icons.other_houses, "Pantry"),
+    bottomIcon(Icons.cookie, "Pantry"),
     bottomIcon(Icons.handshake, "Help out"),
     bottomIcon(Icons.map, "Map"),
   ];
