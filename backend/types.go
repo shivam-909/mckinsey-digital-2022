@@ -55,6 +55,7 @@ type FoodItem struct {
 	ShortName       string     `json:"short_name"`
 	FoodDescription string     `json:"food_description"`
 	BestBy          time.Time  `json:"best_by"`
+	Image           string     `json:"image"`
 }
 
 type Appliance struct {

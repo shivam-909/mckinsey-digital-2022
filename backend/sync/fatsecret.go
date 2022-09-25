@@ -97,7 +97,7 @@ func (f fatSecretClient) constructURL(m Method, args ...interface{}) string {
 		term, _ := args[0].(string)
 		offset, _ := args[1].(int)
 		limit, _ := args[2].(int)
-		return fmt.Sprintf("https://%vmethod=%v&search_expression=%v&format=json&page_number=%v&max_results=%v", f.BaseURL, methodStrings[MethodSearchFood], term, offset, limit)
+		return fmt.Sprintf("%vmethod=%v&search_expression=%v&format=json&page_number=%v&max_results=%v", f.BaseURL, methodStrings[MethodSearchFood], term, offset, limit)
 
 	case MethodRefreshToken:
 		return "https://oauth.fatsecret.com/connect/token?grant_type=client_credentials&scope=basic"
@@ -137,7 +137,6 @@ func (f *fatSecretClient) refreshToken() error {
 
 	ar := &accessTokenRes{}
 	err = json.Unmarshal(b, ar)
-
 	if err != nil {
 		return fmt.Errorf("failed to unmarshal fatsecret response: %v", err)
 	}
