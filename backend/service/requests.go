@@ -1,6 +1,8 @@
 package service
 
-import hackathon "github.com/shivam-909/mckinsey-digital-2022"
+import (
+	hackathon "github.com/shivam-909/mckinsey-digital-2022"
+)
 
 type RegisterRequest struct {
 	Username string `json:"username"`
@@ -13,7 +15,7 @@ type LoginRequest struct {
 	Password string `json:"password"`
 }
 
-type UpdateHouseholdRequest struct {
+type NewHouseholdRequest struct {
 	Postcode string `json:"postcode"`
 }
 
@@ -26,6 +28,14 @@ type AddInhabitantRequest struct {
 
 type UpdatePantryRequest struct {
 	PantryItems []hackathon.FoodItem `json:"pantry_items"`
+}
+
+type AddToPantryRequest struct {
+	HouseholdID     string `json:"household_id"`
+	ShortName       string `json:"short_name"`
+	FoodDescription string `json:"food_description"`
+	BestBy          int64  `json:"best_by"`
+	Image           string `json:"image"`
 }
 
 type GetFoodItemsRequest struct {

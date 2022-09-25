@@ -1,16 +1,17 @@
 package syncexternal
 
 import (
-	"flag"
 	"log"
 )
 
 var (
-	fs_client = flag.String("fs_client", "", "")
-	fs_secret = flag.String("fs_secret", "", "")
-
 	FSClient = &fatSecretClient{
-		BaseURL: "platform.fatsecret.com/rest/server.api?",
+		BaseURL: "https://platform.fatsecret.com/rest/server.api?",
+	}
+
+	SClient = &spoonClient{
+		AccessToken: "2f2aac06d29543b4a89dbc8ef1801d0a",
+		BaseURL:     "https://api.spoonacular.com/",
 	}
 )
 
@@ -21,11 +22,12 @@ type fatSecretClient struct {
 	AccessToken  string
 }
 
-func Init() {
-	flag.Parse()
-	FSClient.ClientID = *fs_client
-	FSClient.ClientSecret = *fs_secret
+type spoonClient struct {
+	BaseURL     string
+	AccessToken string
+}
 
+func Init() {
 	err := FSClient.refreshToken()
 	if err != nil {
 		log.Fatalf("failed to authenticate fatsecret: %v", err)
