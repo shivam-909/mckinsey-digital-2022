@@ -12,7 +12,7 @@ class Utils {
       timeString = "Today";
     }
 
-    print(duration.inHours.toString() + " " + timeString);
+    // print(duration.inHours.toString() + " " + timeString);
     return timeString;
   }
 }

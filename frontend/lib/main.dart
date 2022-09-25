@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
           ),
-      home: BottomNavWrapper(),
+      home: SafeArea(child: BottomNavWrapper()),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }

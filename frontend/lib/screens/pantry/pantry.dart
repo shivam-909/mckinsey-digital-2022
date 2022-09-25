@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/pantry/additemsearch.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Pantry extends StatefulWidget {
   const Pantry({super.key});
@@ -10,6 +12,11 @@ class Pantry extends StatefulWidget {
 class _PantryState extends State<Pantry> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+        body: Column(
+      children: [
+        AddItemSearch(),
+      ],
+    ));
   }
 }

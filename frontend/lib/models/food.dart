@@ -1,10 +1,12 @@
+import 'dart:ffi';
+
 class Food {
   final String name;
   final String type;
   final String id;
   final String url;
   final String servingSize;
-  final Map<String, int> nutrition;
+  final Map<String, String> nutrition;
 
   Food(
       {required this.name,
@@ -14,5 +16,27 @@ class Food {
       required this.nutrition,
       required this.id});
 
-  // factory Food.fromJson(Map<String dynamic> json) => Food(name: json["food_name"], type: json["food_type"], url:  json[], servingSize, nutrition)
+  static Map<String, dynamic> parseDescription(String val) {
+    List<String> descriptionSplit = val.split(" - ");
+    String servingSize = descriptionSplit[0].split(" ")[1];
+    Map<String, String> details = {
+      for (var val in descriptionSplit[1].split(" | "))
+        val.split(": ")[0]: val.split(": ")[1]
+    };
+
+    return {"servingSize": servingSize, "details": details};
+  }
+
+  factory Food.fromJson({required Map<String, dynamic> jsonData}) {
+    Map<String, dynamic> parsedDesc =
+        parseDescription(jsonData["food_description"]);
+
+    return Food(
+        name: jsonData["food_name"],
+        type: jsonData["food_type"],
+        url: jsonData["food_url"],
+        servingSize: parsedDesc["servingSize"],
+        nutrition: parsedDesc["details"],
+        id: jsonData["food_id"]);
+  }
 }

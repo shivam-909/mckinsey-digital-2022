@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/client/endpointcalls.dart';
 import 'package:frontend/models/pantryitem.dart';
 import 'package:frontend/screens/home/expiringtile.dart';
 import 'package:frontend/util/palette.dart';
@@ -11,6 +12,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      // print(await Client.fetchFoods("tomato"));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
