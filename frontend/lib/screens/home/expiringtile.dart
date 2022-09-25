@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/food.dart';
 import 'package:frontend/models/pantryitem.dart';
 import 'package:frontend/util/palette.dart';
 import 'package:frontend/util/utils.dart';

@@ -39,6 +39,7 @@ dependencies:
   cached_network_image: ^3.2.1
   flutter_map: ^2.2.0
   geolocator: ^9.0.2
+  html: ^0.15.0
 
 dev_dependencies:
   flutter_test:

@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:frontend/models/food.dart';
+import 'package:frontend/models/recipe.dart';
 import 'package:http/http.dart' as http;
 
 class Client {
   static const String baseUrl = "http://10.23.226.16/api/";
 
-  static Future<List<Food>> fetchFoods(String query) async {
+  static Future<List<Food>> fetchFoods(String query, DateTime expiry) async {
     http.Response response = await http.get(
         Uri.parse(
           baseUrl + "search?term=$query&offset=0&limit=10",
@@ -17,7 +18,9 @@ class Client {
 
     List<dynamic> json = jsonDecode(response.body);
 
-    return json.map((element) => Food.fromJson(jsonData: element)).toList();
+    return json
+        .map((element) => Food.fromJson(jsonData: element, expiry: expiry))
+        .toList();
   }
 
   static Future<List<Food>> fetchPantry() async {
@@ -36,10 +39,22 @@ class Client {
         .toList();
   }
 
-  static Future<List<String>> fetchPantryRecipes() async {
+  static Future<List<Recipe>> fetchPantryRecipes(List<String> filters) async {
+    Map<String, String> mappings = {
+      "Vegetarian": "vegetarian",
+      "Halal": "halal",
+      "Non-beef": "nonbeef",
+      "Coeliac": "coeliac",
+    };
+
+    String filterString = filters.map((e) => mappings[e]).join(",");
+
     http.Response response = await http.get(
         Uri.parse(
-          baseUrl + "pantryrecipes",
+          baseUrl +
+              ((filters.length == 0)
+                  ? "pantryrecipes"
+                  : "pantryrecipes?diet=$filterString"),
         ),
         headers: {"Content-Type": "application/json"});
 
@@ -47,7 +62,7 @@ class Client {
 
     List<dynamic> json = jsonDecode(response.body);
 
-    return json.map((element) => element["title"] as String).toList();
+    return json.map((element) => Recipe.fromJson(element)).toList();
     // .map((element) => Food.fromPantryJson(jsonData: element))
   }
 
@@ -59,10 +74,12 @@ class Client {
               "563492ad6f91700001000001ff5847c3775c4e659d58ab8b6e5b312b"
         });
 
-    Map<String, dynamic> jsonData = jsonDecode(response.body);
+    Map<String, dynamic> jsonData = jsonDecode(response.body) ?? {};
 
     print(jsonData);
 
-    return jsonData["photos"][0]["src"]["original"];
+    return jsonData["photos"] == null
+        ? ""
+        : jsonData["photos"][0]["src"]["original"];
   }
 }

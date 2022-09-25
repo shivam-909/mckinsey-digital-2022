@@ -82,8 +82,13 @@ class _AddItemSearchState extends State<AddItemSearch> {
   }
 
   addItemForm() => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          FoodTile(data: data!),
+          Padding(
+            padding: EdgeInsets.all(12),
+            child: FoodTile(data: data!),
+          ),
           TextButton(
               onPressed: () {},
               child: Row(
@@ -115,6 +120,8 @@ class _DropDownsearchState extends State<DropDownsearch> {
     });
   }
 
+  DateTime expiryDate = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,24 +149,47 @@ class _DropDownsearchState extends State<DropDownsearch> {
               decoration: InputDecoration(hintText: "Search"),
               controller: _inputController,
             ),
+            TextButton(
+                onPressed: () async {
+                  DateTime newPick = (await showDatePicker(
+                      context: context,
+                      initialDate: expiryDate,
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime(DateTime.now().year + 5)))!;
+
+                  setState(() {
+                    expiryDate = newPick;
+                  });
+                },
+                child: Row(
+                  children: [Icon(Icons.calendar_month), Text("Set expiry")],
+                  mainAxisSize: MainAxisSize.min,
+                )),
             if (query.trim() != "")
               FutureBuilder<List<Food>>(
-                  future: Client.fetchFoods(query),
+                  future: Client.fetchFoods(query, expiryDate),
                   builder: ((context, snapshot) {
                     print(snapshot.connectionState);
                     if (snapshot.hasData) {
-                      return Wrap(
-                          children: List<Widget>.generate(
-                        snapshot.data!.length,
-                        (index) => GestureDetector(
-                          child:
-                              FoodTile(data: snapshot.data!.elementAt(index)),
-                          onTap: () {
-                            Navigator.pop(
-                                context, snapshot.data!.elementAt(index));
-                          },
-                        ),
-                      ));
+                      return Expanded(
+                        child: ListView(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            children: List<Widget>.generate(
+                              snapshot.data!.length,
+                              (index) => GestureDetector(
+                                child: Padding(
+                                  padding: EdgeInsets.all(12),
+                                  child: FoodTile(
+                                      data: snapshot.data!.elementAt(index)),
+                                ),
+                                onTap: () {
+                                  Navigator.pop(
+                                      context, snapshot.data!.elementAt(index));
+                                },
+                              ),
+                            )),
+                      );
                     } else {
                       if (snapshot.hasError) {
                         print(snapshot.error);
