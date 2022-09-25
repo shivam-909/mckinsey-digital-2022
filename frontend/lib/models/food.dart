@@ -1,5 +1,7 @@
 import 'dart:ffi';
 
+import 'package:frontend/util/utils.dart';
+
 class Food {
   final String name;
   final String type;
@@ -7,6 +9,7 @@ class Food {
   final String url;
   final String servingSize;
   final Map<String, String> nutrition;
+  DateTime useBy;
 
   Food(
       {required this.name,
@@ -14,7 +17,8 @@ class Food {
       required this.url,
       required this.servingSize,
       required this.nutrition,
-      required this.id});
+      required this.id,
+      required this.useBy});
 
   static Map<String, dynamic> parseDescription(String val) {
     List<String> descriptionSplit = val.split(" - ");
@@ -27,7 +31,8 @@ class Food {
     return {"servingSize": servingSize, "details": details};
   }
 
-  factory Food.fromJson({required Map<String, dynamic> jsonData}) {
+  factory Food.fromJson(
+      {required Map<String, dynamic> jsonData, required DateTime expiry}) {
     Map<String, dynamic> parsedDesc =
         parseDescription(jsonData["food_description"]);
 
@@ -37,6 +42,22 @@ class Food {
         url: jsonData["food_url"],
         servingSize: parsedDesc["servingSize"],
         nutrition: parsedDesc["details"],
-        id: jsonData["food_id"]);
+        id: jsonData["food_id"],
+        useBy: DateTime.now());
   }
+
+  setUseBy(DateTime date) {
+    this.useBy = date;
+  }
+
+  factory Food.fromPantryJson({required Map<String, dynamic> jsonData}) => Food(
+      name: jsonData["short_name"],
+      type: "Pantry Food",
+      url: jsonData["image"],
+      servingSize: "",
+      // parsedDesc["servingSize"],
+      nutrition: {},
+      useBy: DateTime.parse(jsonData["best_by"]),
+      // parsedDesc["details"],d
+      id: jsonData["id"]);
 }

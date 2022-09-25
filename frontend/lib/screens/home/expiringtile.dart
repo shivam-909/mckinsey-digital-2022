@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/food.dart';
 import 'package:frontend/models/pantryitem.dart';
 import 'package:frontend/util/palette.dart';
 import 'package:frontend/util/utils.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ExpiringTile extends StatefulWidget {
   const ExpiringTile({super.key, required this.item});
@@ -35,13 +37,18 @@ class _ExpiringTileState extends State<ExpiringTile> {
             ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: SizedBox(
-                height: 120,
-                width: 120,
-                child: Image.network(
-                  widget.item.imageUrl,
-                  fit: BoxFit.cover,
-                ),
-              ),
+                  height: 120,
+                  width: 120,
+                  child: CachedNetworkImage(
+                    imageUrl: widget.item.imageUrl,
+                    cacheKey: widget.item.name,
+                    fit: BoxFit.fill,
+                  )
+                  // Image.network(
+                  //   widget.item.imageUrl,
+                  //   fit: BoxFit.cover,
+                  // ),
+                  ),
             ),
             const SizedBox(
               height: 8,

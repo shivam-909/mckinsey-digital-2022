@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/client/endpointcalls.dart';
+import 'package:frontend/models/food.dart';
 import 'package:frontend/screens/pantry/additemsearch.dart';
+import 'package:frontend/screens/pantry/foodtile.dart';
+import 'package:frontend/util/palette.dart';
 import 'package:shimmer/shimmer.dart';
 
 class Pantry extends StatefulWidget {
@@ -13,10 +17,54 @@ class _PantryState extends State<Pantry> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-      children: [
-        AddItemSearch(),
-      ],
-    ));
+        appBar: AppBar(
+          title: const Text(
+            "Pantry",
+            style: TextStyle(fontSize: 24, color: Palette.highEmphasis),
+          ),
+          centerTitle: true,
+          backgroundColor: Palette.background,
+        ),
+        body: SingleChildScrollView(
+          child: ListView(
+            shrinkWrap: true,
+            // mainAxisSize: MainAxisSize.min,
+            children: [
+              AddItemSearch(),
+              FutureBuilder<List<Food>>(
+                  future: Client.fetchPantry(),
+                  builder: ((context, snapshot) {
+                    print(snapshot.connectionState);
+                    if (snapshot.hasData) {
+                      return Expanded(
+                        child: Column(
+                            children: List<Widget>.generate(
+                          snapshot.data!.length,
+                          (index) => GestureDetector(
+                            child: Padding(
+                                padding: EdgeInsets.all(12),
+                                child: FoodTile(
+                                    data: snapshot.data!.elementAt(index))),
+                            // onTap: () {
+                            //   Navigator.pop(
+                            //       context, snapshot.data!.elementAt(index));
+                            // },
+                          ),
+                        )),
+                      );
+                    } else {
+                      if (snapshot.hasError) {
+                        print(snapshot.error);
+                      }
+
+                      return const Center(
+                        child:
+                            CircularProgressIndicator(color: Palette.primary),
+                      );
+                    }
+                  }))
+            ],
+          ),
+        ));
   }
 }

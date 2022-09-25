@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/map/map.dart';
 import 'package:frontend/screens/home/home.dart';
 import 'package:frontend/screens/pantry/pantry.dart';
 import 'package:frontend/screens/recipes/recipesearch.dart';
@@ -43,7 +44,8 @@ class _BottomNavWrapperState extends State<BottomNavWrapper> {
     1: const RecipeGenerator(),
     2: const Pantry(),
     3: placeholder("Volunteering"),
-    4: placeholder("Map")
+    4: const MapView()
+    // 4: placeholder("Map")
   };
 
   void _onItemTapped(int index) {
